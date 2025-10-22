@@ -1,4 +1,7 @@
 # HW3 
+Use GitHub features to share projects, collaborate with
+others, and manage version history
+
 Visualization #1: Creates stratified
 boxplot of text messages by Group
 
