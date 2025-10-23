@@ -1,0 +1,66 @@
+---
+title: "HW3_379"
+author: "Vladyslav Faychuk"
+date: "2025-10-23"
+output: pdf_document
+---
+
+```{r, include=TRUE, echo=TRUE}
+
+read.csv("TextMessages.csv")
+
+TMData <- read.csv("TextMessages.csv")
+
+is.factor(TMData$Group)
+
+is.factor(TMData$Participant)
+
+TMData$Group <- as.factor(TMData$Group)
+
+TMData$Participant <- as.factor(TMData$Participant)
+
+#install.packages("ggplot2")
+
+library(ggplot2)
+
+boxplot_BaselinebyGroup <- ggplot(TMData, aes(Group, Baseline))
+
+boxplot_BaselinebyGroup
+
+boxplot_BaselinebyGroup + geom_boxplot()
+
+boxplot_BaselinebyGroup + geom_boxplot() + labs(x="Group", y="Baseline")
+
+min(TMData$Baseline)
+
+max(TMData$Baseline)
+
+boxplot_BaselinebyGroup + geom_boxplot() + labs(x="Group", y="Baseline") + 
+  scale_y_continuous(limits = c(40, 100))
+
+boxplot_BaselinebyGroup + geom_boxplot() + labs(x="Group", y="Baseline") + 
+  scale_y_continuous(limits = c(40, 100), breaks = seq(from =40, to = 100, by = 5))
+
+```
+
+
+```{r, include=TRUE, echo=TRUE}
+library(tidyverse)
+textM <- read.csv("TextMessages.csv")
+#Create stratified bar charts of text messages by Time
+#Transform to long data to combine times (Baseline and six_months)
+long_data <- textM %>% pivot_longer(cols = c(Baseline, Six_months),
+               names_to = "Time",
+               values_to = "Texts")
+
+head(long_data)
+
+# Create stratified bar chart
+ggplot(long_data, aes(x = Time, y = Texts)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  labs(
+    title = "Average Number of Text Messages by Time",
+    x = "Time",
+    y = "Average Texts",
+  ) 
+```
